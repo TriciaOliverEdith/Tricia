@@ -24,11 +24,11 @@ jobs:
     - name: A1-Build
       uses: actions/checkout@v1
     - name: Main
-      run: sleep 10
+      run: sleep 2
   OKE-1:
     needs: [A1]
     if: always()
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: technote-space/workflow-conclusion-action@v2
       - name: Check Failure
@@ -57,7 +57,7 @@ jobs:
         go-version: ${{ matrix.go }}
       id: go
     - name: D1-Build
-      run: sleep 5
+      run: sleep 1
   OKE-2:
     needs: [A1, OKE-1, D1]
     if: always()
