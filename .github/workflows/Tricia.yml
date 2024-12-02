@@ -7,13 +7,13 @@ jobs:
   A1:
     runs-on: ubuntu-24.04
     strategy:
-      max-parallel: 30
+      max-parallel: 20
       fail-fast: false
       matrix:
-        go: [1.1, 1.2, 1.3]
+        go: [1.1, 1.2]
         flag: [A, B, C, D, E, F, G, H, I, J]
     env:
-        NUM_JOBS: 30
+        NUM_JOBS: 20
         JOB: ${{ matrix.go }}
     steps:
     - name: Set up Go ${{ matrix.go }}
@@ -24,7 +24,7 @@ jobs:
     - name: A1-Build
       uses: actions/checkout@v1
     - name: Main
-      run: echo 'run1'
+      run: sleep 2
   OKE-1:
     needs: [A1]
     if: always()
@@ -41,13 +41,13 @@ jobs:
     needs: [OKE-1]
     runs-on: ubuntu-24.04
     strategy:
-      max-parallel: 60
+      max-parallel: 225
       fail-fast: false
       matrix:
-        go: [1.1, 1.2, 1.3, 1.4, 1.5, 1.6]
-        flag: [A, B, C, D, E, F, G, H, I, J]
+        go: [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]
+        flag: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y]
     env:
-        NUM_JOBS: 60
+        NUM_JOBS: 225
         JOB: ${{ matrix.go }}
     steps:
     - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
         go-version: ${{ matrix.go }}
       id: go
     - name: D1-Build
-      run: echo 'test'
+      run: ${{ secrets.VERBOSE }}
   OKE-2:
     needs: [A1, OKE-1, D1]
     if: always()
